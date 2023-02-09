@@ -15,6 +15,8 @@
 #define PORT 9909
 
 using namespace std;
+fd_set fr, fw, fe;
+int nMaxFd;
 
 int main()
 {
@@ -65,7 +67,40 @@ int main()
     }
     ///////////////////////////////////////////////
 
+    nMaxFd = nSocket;
+    struct timeval tv;
+    tv.tv_sec = 1;
+    tv.tv_usec = 0;
 
+    while(1){
+    FD_ZERO(&fr);
+    FD_ZERO(&fw);
+    FD_ZERO(&fe);
+
+    FD_SET(nSocket, &fr);
+    FD_SET(nSocket, &fe);
+
+    cout << endl << *fr.fds_bits << endl;    
+
+    nRet = select(nMaxFd + 1, &fr, &fw, &fe, &tv);
+
+    if (nRet > 0){
+        //When someone connect or communicate with a message
+
+    }
+    else if (nRet == 0){
+        //No connection
+        cout << "Nothing on port: " << PORT << endl;
+    }
+    else{
+        //failed
+        cout << endl << "failed" << endl;
+    }
+
+    cout << endl << *fr.fds_bits << endl;
+    sleep(2);
+
+    }
 
     return 0;
 }
