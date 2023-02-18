@@ -39,7 +39,13 @@ int main()
     }
 
     // Accept a call
-    
+    sockaddr_in client;
+    socklen_t clientsize = sizeof(client);
+    char host[NI_MAXHOST];
+    char svc[NI_MAXSERV];
+
+    int clientsocket
+
     // Close a listening socket
     // display and echo
     // Close
