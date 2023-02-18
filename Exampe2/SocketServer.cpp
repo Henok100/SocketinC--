@@ -15,18 +15,18 @@
 #define PORT 9909
 
 using namespace std;
-fd_set fr, fw, fe;
-int nMaxFd;
+//fd_set fr, fw, fe;
+//int nMaxFd;
 
 int main()
 {
+    // ---------- ESTABLISHING SOCKET CONNECTION ----------
+    // --------------- socket() function ------------------
+
     int nSocket = socket(AF_INET, SOCK_STREAM, 0);
-
-    struct sockaddr_in srv; //Server address
+   
+    struct sockaddr_in srv; 
     fd_set fr, fw, fe;
-
-    /* ---------- ESTABLISHING SOCKET CONNECTION ----------*/
-    /* --------------- socket() function ------------------*/
 
     if (nSocket < 0) 
     {
@@ -35,14 +35,16 @@ int main()
     }
 
     cout << "\n=> Socket server has been created..." << nSocket <<endl;
-
+    
+    // Intialize the environment for sockaddr structure
+    
     srv.sin_family = AF_INET;
     srv.sin_addr.s_addr = htons(INADDR_ANY);
     srv.sin_port = htons(PORT); // host to network byte order
     memset(&(srv.sin_zero), 0, 8);
 
-    /* ---------- BINDING THE SOCKET ---------- */
-    /* ---------------- bind() ---------------- */
+    // ---------- BINDING THE SOCKET ---------- //
+    // ---------------- bind() ---------------- //
 
     int nRet = 0;
 
@@ -55,7 +57,8 @@ int main()
         cout << "Successfully bind to local port" << endl;
     }
 
-    ////////////////// Listen //////////////////////
+    /*------------------Listen-----------------*/  
+    
     nRet = listen(nSocket, 5);
 
     if (nRet < 0){
@@ -65,9 +68,10 @@ int main()
     else {
         cout << endl << "Started listening to local port" << endl;
     }
-    ///////////////////////////////////////////////
+      
+    // Keep waiting for new requests
 
-    nMaxFd = nSocket;
+    int nMaxFd = nSocket;
     struct timeval tv;
     tv.tv_sec = 1;
     tv.tv_usec = 0;
@@ -79,8 +83,6 @@ int main()
 
     FD_SET(nSocket, &fr);
     FD_SET(nSocket, &fe);
-
-    cout << endl << *fr.fds_bits << endl;    
 
     nRet = select(nMaxFd + 1, &fr, &fw, &fe, &tv);
 
@@ -97,9 +99,7 @@ int main()
         cout << endl << "failed" << endl;
     }
 
-    cout << endl << *fr.fds_bits << endl;
     sleep(2);
-
     }
 
     return 0;
