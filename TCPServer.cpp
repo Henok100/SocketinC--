@@ -28,14 +28,14 @@ int main()
     if (bind(listening,(sockaddr*)&hint, sizeof(hint)) == -1)
     {
         cerr << "Cant bind to IP/PORT";
-        return 2;
+        return -2;
     }
 
     // Mark the socket for listening in
-    if (listen(listening, SOMAXCONN) == 1)
+    if (listen(listening, SOMAXCONN) == -1)
     {
         cerr << "Can't listen";
-        return 3;
+        return -3;
     }
 
     // Accept a call
