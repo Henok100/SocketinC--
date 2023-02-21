@@ -85,11 +85,11 @@ int main()
     */
 
     // display and echo
-    char buf[4096];
+    
     while (true)
     {
         // // Clear the buffer
-         memset(buf, 0, 4096);
+         //memset(buf, 0, 4096);
         // // Wait for message
         // int bytesRecv = recv(clientSocket, buf, 4096, 0);
         // if (bytesRecv == -1)
@@ -111,27 +111,19 @@ int main()
 
     while (getline(inputfile, line))
     {
-        string x;
-        string y;
-        string z;
-        string zR;
-        string heading;
-        string time;
+        string x; string y; string z; string zR; string heading; string time;
 
-        getline(inputfile, x, ',');
-        getline(inputfile, y, ',');
-        getline(inputfile, z, ',');
-        getline(inputfile, zR, ',');
-        getline(inputfile, heading, ',');
-        getline(inputfile, time, ',');
+        getline(inputfile, x, ','); getline(inputfile, y, ',');
+        getline(inputfile, z, ','); getline(inputfile, zR, ',');
+        getline(inputfile, heading, ','); getline(inputfile, time, ',');
 
-        cout << "X = " << x << endl;
-        cout << "Y = " << y << endl;
-        cout << "Z = " << z << endl;
-        cout << "zR = " << zR << endl;
-        cout << "heading = " << heading << endl;
-        cout << "Time = " << time << endl;
-        cout << "---------------------" << endl;
+        string buf[5] = {x, y, z, zR, heading};
+
+        /* cout << "X = " << x << endl; cout << "Y = " << y << endl;
+        cout << "Z = " << z << endl; cout << "zR = " << zR << endl;
+        cout << "heading = " << heading << endl; cout << "Time = " << time << endl;
+        cout << "---------------------" << endl; */
+        cout << buf << endl;
 
         send(clientSocket, buf, sizeof(buf), 0);
 
