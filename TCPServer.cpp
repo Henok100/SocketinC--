@@ -88,7 +88,7 @@ int main()
         int bytesRecv = recv(clientSocket, buf, 4096, 0);
         if (bytesRecv == -1)
         {
-            cerr << "There is a connection proble.\n";
+            cerr << "There is a connection problem.\n";
             break;
         }
         if (bytesRecv == 0)
@@ -101,7 +101,7 @@ int main()
         
         // Resend message
         send(clientSocket, buf, bytesRecv + 1, 0);
-        
+         
     }
 
     // Close
