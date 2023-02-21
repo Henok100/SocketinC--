@@ -1,10 +1,10 @@
-#include <iostream>
-#include <sys/types.h>
+#include <iostream>         // C++ library
+#include <sys/types.h>      // C   library // for socket function
+#include <sys/socket.h>     // for socket function
 #include <unistd.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <string.h>
+#include <netdb.h>          // for getnameinfo function
+#include <arpa/inet.h>      // for inet_pton function
+#include <string.h>         // for memset function
 #include <string>
 
 using namespace std;
@@ -52,7 +52,7 @@ int main()
             continue;
         }
 
-        //		Wait for response
+        //	Wait for response
         memset(buf, 0, 4096);
         int bytesReceived = recv(sock, buf, 4096, 0);
         if (bytesReceived == -1)
