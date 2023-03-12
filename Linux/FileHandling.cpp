@@ -52,7 +52,8 @@ int main()
             getline(inputfile, heading, ',');
             getline(inputfile, time, ',');
             //continue;
-            cout << line << endl;
+            string buf[5] = {x, y, z, zR, heading};
+            cout << buf << endl;
             usleep(stod(time) * micro);
         }
 
