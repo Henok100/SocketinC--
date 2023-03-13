@@ -13,8 +13,8 @@ using namespace std;
 int main()
 {
     //	Create a socket
-    int ClientServer = socket(AF_INET, SOCK_STREAM, 0);
-    if (ClientServer == INVALID_SOCKET)
+    int ClinetSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (ClinetSocket == INVALID_SOCKET)
     {
         cout << "Socket creation Failed\n\n";
         return INVALID_SOCKET;
@@ -34,7 +34,7 @@ int main()
     inet_pton(AF_INET, ipAddress.c_str(), &clinet.sin_addr.s_addr);
 
     //	Connect to the server on the socket
-    int connectRes = connect(ClientServer, (sockaddr*)&clinet, sizeof(clinet));
+    int connectRes = connect(ClinetSocket, (sockaddr*)&clinet, sizeof(clinet));
     if (connectRes == INVALID_SOCKET)
     {
         cout << "Connection Failed\n\n";
@@ -45,40 +45,42 @@ int main()
         cout << "Connection Successful\n\n";
     }
 
-    //	While loop:
-    /* char buf[4096];
-    string userInput;
+    while (true)
+    {
+    
+    char charBuffer[200];
 
+    cout << "Client :";
+    cin.getline(charBuffer, 200);
+    send(ClinetSocket, charBuffer, 200, 0);
 
-    do {
-        //		Enter lines of text
-        cout << "> ";
-        getline(cin, userInput);
+    /*  if (send(ClinetSocket, charBuffer, 200, 0) > 0)
+    {
+        cout << "Sent message: " << charBuffer << endl;
+    }
+    else 
+    {
+        cout << "Sending Failed\n";
+        return -1;
+    } */
 
-        //		Send to server
-        int sendRes = send(sock, userInput.c_str(), userInput.size() + 1, 0);
-        if (sendRes == -1)
-        {
-            cout << "Could not send to server! Whoops!\r\n";
-            continue;
-        }
-
-        //		Wait for response
-        memset(buf, 0, 4096);
-        int bytesReceived = recv(sock, buf, 4096, 0);
-        if (bytesReceived == -1)
-        {
-            cout << "There was an error getting response from server\r\n";
-        }
-        else
-        {
-            //		Display response
-            cout << "SERVER> " << string(buf, bytesReceived) << "\r\n";
-        }
-    } while(true);
-
+    //Receving
+    char recvBuffer[200];
+    recv(ClinetSocket, recvBuffer, 200, 0);
+    cout << "Server: " << recvBuffer << endl;
+    if (recvBuffer == "Bye")
+    {
+        cout << "Exiting" << endl;
+        break;
+    }
+    /* if (recv(ClinetSocket, recvBuffer, 200, 0) > 0)
+    {
+        cout << "Server: " << recvBuffer << endl;
+    } */
+    
+    }   
     //	Close the socket
-    close(sock);
-*/
+    close(ClinetSocket);
+
     return 0;
 } 
